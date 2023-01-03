@@ -47,4 +47,4 @@
 | 서적 | 해방 시리즈, 21일 시리즈, 24시간 시리즈, 인형 시리즈… | 코드 완성, 생각하게 만들지 마세요, 정규식 마스터하기 | 디자인 패턴, 피플웨어, 프로그래밍 펄, 알고리즘 디자인 매뉴얼, 실용 프로그래머, Mythical Manmonth | 컴퓨터 프로그램의 구조와 해석, 개념 기술, 컴퓨터 프로그래밍 모델, 컴퓨터 프로그래밍 기술, 데이터베이스 시스템, by C. J Date, Thinking Forth, Little Schemer |  |
 | 블로그 | 그들에 대해 들었지만 시간이 없었습니다. | 기술/프로그래밍/소프트웨어 엔지니어링 블로그를 읽고 정기적으로 팟캐스트를 듣습니다. | 자신이 수집한 유용한 기사 및 도구 모음이 포함된 링크 블로그를 유지합니다. | 프로그래밍에 대한 개인적인 통찰력과 생각을 공유하는 블로그를 유지합니다. |  |
 
-https://sijinjoseph.com/programmer-competency-matrix/
+출처 : https://sijinjoseph.com/programmer-competency-matrix/
