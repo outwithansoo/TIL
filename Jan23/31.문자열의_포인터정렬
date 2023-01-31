@@ -1,0 +1,408 @@
+```c
+
+#define TEST "A string from #define."
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+
+/*
+	puts() which doesn't add a new line at the end
+	Use pointer increment operator and putchar()
+*/
+
+void custom_put(const char* str);	// Only two lines
+int custom_put2(const char* str);	// Add \n, return # of characters
+
+int main()
+{
+	/* 
+	
+		puts() : add \n at the end 
+	
+	*/
+
+	//char str[60] = "String array initialized";
+	//const char* ptr = "A pointer initialized";
+
+	//puts("String without \\n");
+	//puts("END");
+	//puts(TEST);
+	//puts(TEST + 5);
+	//puts(&str[3]);
+	////puts(str[3]);// Error
+	//puts(ptr + 3);
+
+
+	/*
+	
+		string without \0
+		
+	*/
+
+	//char str[] = {'H', 'I', '!'};	//No \0 at the end.
+	//puts(str);	//VS warns you!
+
+	/*
+		puts() and fputs()
+	*/
+
+	/*char line[100];
+	while (gets(line))
+		puts(line);*/
+
+	/*char line[100];
+	while (fgets(line, 100, stdin))
+		fputs(line, stdout);*/
+
+	/*
+		printf()
+	*/
+
+	//char str[] = "Just do it, do it!";
+	//printf("%s\n", str);	//\n added
+	//puts(str);
+
+	//char input[100] = "";
+	//int ret = scanf("%10s", input);	//Input : "Just do it, do it!\n" (Note %10s)
+	//printf("%s\n", input);	//Output : "Just"
+	//ret = scanf("%10s", input);	//Reads remaning buffer
+	//printf("%s\n", input);	//Output : "do"
+
+	/*
+		custom function
+	*/
+
+	custom_put("just ");
+	custom_put("Do it!");
+
+	printf("%d\n", custom_put2("12345"));
+
+
+	return 0;
+}
+
+
+void custom_put(const char* str)
+{
+	while (*str != '\0') // while(*str)
+		putchar(*str++);
+}
+
+
+
+int custom_put2(const char* str)
+{
+	int count = 0;
+	while (*str)
+	{
+		putchar(*str++);
+		count++;
+	}
+	putchar('\n');
+
+	return count;
+}
+
+```
+
+```c
+
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+
+void fit_str(char*, unsigned int);
+int strcmp(const char* s1, const char* s2);
+
+int main()
+{
+	/*
+		strlen() : returns length of the string
+	*/
+
+	// TODO: use debugger
+	//char msg[] = "Just,""do it!";
+	//puts(msg);
+	//printf("Length %d\n", strlen(msg));
+	//fit_str(msg, 4);
+	//puts(msg);
+	//printf("Length %d\n", strlen(msg));
+	////TODO: implement fit_str() function
+
+	/*
+		strcat() and strncat() : string concatenation
+	*/
+
+	char str1[100] = "First string";
+	char str2[] = "Second string";
+
+	/*strcat(str1, ", ");
+	strcat(str1, str2);*/
+	strncat(str1,str2,2); //Append 2 characters
+	puts(str1);
+
+	//TODO : implement my_strcat() function!
+
+	/*
+		strcmp() and strncmp()	: compare strings(not characters)
+	*/
+
+	printf("%d\n", strcmp("A", "A"));
+	printf("%d\n", strcmp("A", "A"));
+	printf("%d\n", strcmp("Hello", "Hello"));
+	printf("%d\n", strcmp("Banana", "Bananas"));
+	printf("%d\n", strcmp("Bananas", "Banana"));
+	printf("%d\n", strncmp("Bananas", "Banana",6));
+	//TODO: implement strcmp!
+
+	//char dest[100] = "";	// make sure memory is enough
+	//char source[] = "Start programing!";
+	////dest = source; //Error
+	////dest = "Start something"; //Error
+	//strcpy(dest, source);	// '\0' is NOT added
+	//strncpy(dest, source, 5);
+	///*strncpy(dest, source + 6);
+	//strcpy(dest, source);
+	//strcpy(dest + 6, "coding!");*/
+	//puts(dest);
+
+	/* 
+		sprintf()
+	*/
+
+	char str[100] = "";
+	int i = 123;
+	double d = 3.14;
+	sprintf(str, "%05d.png %f", i, d);
+	puts(str);
+	
+	/*
+		There are more functions..
+	*/
+
+	printf("%s\n", strchr("Hello, world", 'w'));
+
+	printf("%s\n", strpbrk("Hello, world", "ABCDE"));
+	printf("%s\n", strpbrk("Hello, world", "abcde"));
+
+	printf("%s\n", strrchr("Hello, world, Hello, World", 'l')); //last occurrence
+
+	printf("%s\n", strstr("Hello, world", "wor"));
+	printf("%s\n", strstr("Hello, world", "Wor"));
+
+	return 0;
+}
+
+void fit_str(char* str, unsigned int size)
+{
+	if (strlen(str) > size)
+		str[size] = '\0';
+}
+
+```
+
+```c
+
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+
+/* 
+	Selection Sort Algorithm
+
+	Youtube search "Selection sort", "C550"
+
+	64 25 12 22 11 (min_idx = 0)
+       64          (min_idx = 0)
+	   25		   (min_idx = 1)
+	      25       (min_idx = 1)
+		  12       (min_idx = 2)
+		     12    (min_idx = 2)
+				12 (min_idx = 2)
+				11 (min_idx = 4)
+	11 25 12 22 64 (swap arr[0] and arr[4])
+
+	11 25 12 22 64 (min_idx = 1)
+		  25       (min_idx = 1)
+		  12       (min_idx = 2)
+		     12    (min_idx = 2)
+			    12 (min_idx = 2)
+	11 12 25 22 64 (swap arr[1] and arr[2])
+
+	11 12 25 22 64 (min_idx = 2)
+	...
+
+	11 12 22 25 64 (min_idx = 3)
+	...
+*/
+
+void swap(int* xp, int* yp);
+void printArray(int arr[], int size);
+void selectionSort(int arr[], int n);
+
+int main()
+{
+	int arr[] = { 64, 25, 12, 22, 11 };
+	int n = sizeof(arr) / sizeof(arr[0]);
+
+	selectionSort(arr, n);  // ascending order
+
+	printArray(arr, n);
+
+
+	return 0;
+}
+
+void printArray(int arr[], int size)
+{
+	int i;
+	for (i = 0; i < size; i++)
+		printf("%d ", arr[i]);
+	printf("\n");
+}
+
+void swap(int* xp, int* yp)
+{
+	int temp = *xp;
+	*xp = *yp;
+	*yp = temp;
+}
+
+void selectionSort(int arr[], int n)
+{
+	int i, j, min_idx;
+
+	//One by one move boundary of unsorted subarray
+	for (i = 0; i < n - 1; i++)	//Note n -1
+	{
+		//Find the minimum element in unsorted array
+		min_idx = i;
+		for (j = i + 1; j < n; j++)
+		
+		{
+			if (arr[j] < arr[min_idx])
+				min_idx = j;
+		}
+
+		// Swap the found minimum element with the first element
+		swap(&arr[min_idx], &arr[i]);
+	}
+}
+
+```
+
+```c
+
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#include <stralign.h>  //strcmp()
+
+void swap(char** xp, char** yp);	//Note: Optional
+void printStringArray(char* arr[], int size);
+void selectionSort(char* arr[], int n);
+
+int main()
+{
+	char* arr[] = { "Cherry", "AppleBee","Pineapple","Apple","Orange" };
+	int n = sizeof(arr) / sizeof(arr[0]);
+
+	printStringArray(arr, n);
+
+	selectionSort(arr, n);	// ascending order
+
+	printStringArray(arr, n);
+
+
+	return 0;
+}
+
+void printStringArray(char* arr[], int size)
+{
+	int i;
+	for (i = 0; i < size; i++)
+		puts(arr[i]);
+	printf("\n");
+}
+void swap(char** xp, char** yp)
+{
+	char* temp = *xp;
+	*xp = *yp;
+	*yp = temp;
+}
+
+void selectionSort(char* arr[], int n)
+{
+	int i, j, min_idx;
+
+	//One by one move boundary of unsorted subarray
+	for (i = 0; i < n - 1; i++)
+	{
+		// Find the minimum element in unsorted array
+		min_idx = i;
+		for (j = i + 1; j < n; j++)
+		{
+			if (strcmp(arr[j], arr[min_idx]) < 0)
+				min_idx = j;
+		}
+
+		// Swap the found minimum element with the first element
+		/*char* temp = arr[min_idx];
+		arr[min_idx] = arr[i];
+		arr[i] = temp;*/
+		swap(&arr[i], &arr[min_idx]);
+	}
+}
+
+```
+
+```c
+
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>	// toupper(), ispunct(), ...
+
+#define NUM_LIMIT 1024
+
+void ToUpper(char*);
+int PunctCount(const char*);
+
+int main()
+{
+	char line[NUM_LIMIT];
+	char* new_line = NULL;
+	fgets(line, NUM_LIMIT, stdin);
+	new_line = strchr(line, '\n');  // find first newline
+	if (new_line)
+		*new_line = '\0';
+
+	ToUpper(line);
+	puts(line);
+	printf("%d\n", PunctCount(line));
+
+
+	return 0;
+}
+
+void ToUpper(char* str)
+{
+	while (*str)
+	{
+		*str = toupper(*str);
+		/* if (islower(*str))
+			 *str = toupper(*str);*/
+		str ++;
+	}
+}
+
+int PunctCount(const char* str)
+{
+	int ct = 0;
+	while (*str)
+	{
+		if (ispunct(*str))
+			ct++;
+		str++;
+	}
+
+	return ct;
+}
+
+```
